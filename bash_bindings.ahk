@@ -1,6 +1,6 @@
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
-SendMode Event  ; Recommended for new scripts due to its superior speed and reliability.
+SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 ^left::
@@ -71,4 +71,35 @@ if (A_PriorHotkey == "$^f" and A_TimeSincePriorHotkey < 100) {  ; Check if it's 
 }
 Return
 
+; --- Move Cursor Backward ---
 ^b::Send, {Left}    ; Ctrl+B - Backward char
+
+
+; --- Switch Workspace with CTRL+Num ---
+^1::Send #^{Left}
+^2::Send #^{Right}
+
+; --- Reinsert last Argument ---
+; Variable to track if Escape was pressed
+escapeReleased := false
+
+; When Escape is released, set the flag
+$Esc Up::
+    escapeReleased := true
+    SetTimer, ResetEscapeFlag, -2000  ; Reset the flag after 500 ms
+return
+
+; When period is pressed, check if Escape was released just before
+$.::
+    if (escapeReleased) {
+        Send {AltDown}.
+        Send {AltUp}
+        escapeReleased := false
+    } else {
+        Send .
+    }
+return
+
+ResetEscapeFlag:
+    escapeReleased := false
+return
