@@ -86,7 +86,7 @@ escapeReleased := false
 ; When Escape is released, set the flag
 $Esc Up::
     escapeReleased := true
-    SetTimer, ResetEscapeFlag, -2000  ; Reset the flag after 500 ms
+    SetTimer, ResetEscapeFlag, -2000  ; Reset the flag after 2000 ms
 return
 
 ; When period is pressed, check if Escape was released just before
