@@ -86,7 +86,7 @@ escapeReleased := false
 ; When Escape is released, set the flag
 $Esc Up::
     escapeReleased := true
-    SetTimer, ResetEscapeFlag, -2000  ; Reset the flag after 2000 ms
+    SetTimer, ResetEscapeFlag, -2000  ; Reset the flag after 500 ms
 return
 
 ; When period is pressed, check if Escape was released just before
@@ -102,4 +102,20 @@ return
 
 ResetEscapeFlag:
     escapeReleased := false
+return
+
+; --- Send Ctrl+W when doing Windows+W to match close window behavior ---
+#w::Send ^w
+
+; -- Send Ctrl+T when doing Windows+T to match open new tab behavior ---
+#t::Send ^t
+
+; --- Send Alt+Tab when doing Windows+Tab to match switch window behavior ---
+; --- This doesn't allow you to just tab forward, but shift tab backward works while win+tab is held
+#Tab::
+{   
+  Send {LAlt Down}{Tab}          
+  KeyWait, LWin  ; Wait to release left Win key
+  Send {LAlt Up} ; Close switcher on hotkey release
+}
 return
