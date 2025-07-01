@@ -84,7 +84,7 @@ Return
 escapeReleased := false
 
 ; When Escape is released, set the flag
-$Esc Up::
+~Esc Up::
     escapeReleased := true
     SetTimer, ResetEscapeFlag, -2000  ; Reset the flag after 500 ms
 return
